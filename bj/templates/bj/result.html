@@ -1,0 +1,18 @@
+{% extends './base.html' %}
+{% block content %}
+<!-- <h5> あなたの{{ result }} </h5> -->
+{% if result == 'win' %}
+<h5> あなたの勝ちです！ </h5>
+<p> {{ isChip }}チップ獲得！ </p>
+{% elif result == 'lose' %}
+<h5> あなたの負けです。 </h5>
+<p> {{ bet }}チップを失いました... </p>
+{% else %}
+<h5> 引き分けです。 </h5>
+<p> BETした{{ bet }}チップが戻されます。</p>
+{% endif %}
+<p> {{ player_hand }} {{ player_sum }} </p>
+<p> {{ dealer_hand }} <span> {{ dealer_sum }} </span></p>
+<a href="{% url 'bj:lobby' room.id %}" class="btn btn-primary">もう一度ゲーム</a>
+<a href="{% url 'bj:home'%}" class="btn btn-outline-primary">ホームへ</a>
+{% endblock content %}

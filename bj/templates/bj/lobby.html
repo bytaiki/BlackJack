@@ -1,0 +1,19 @@
+{% extends './base.html' %}
+{% block content %}
+<h1> Room {{ room.id }} へようこそ！</h1>
+<p>現所持チップ: {{ room.chip }} </p>
+<form method="post" class="form">
+    {% csrf_token %}
+    <div class="form-group d-inline-flex">
+        <label for="{{ form.bet.id_for_label }}">
+            <span class="material-symbols-outlined align-bottom">
+                poker_chip
+            </span>
+            ベット額 : 
+        </label>
+        {{ form.bet }}
+    </div>
+    <span><button type="submit" class="btn btn-primary">ベットして開始</button></span>
+</form>
+<a href="{% url 'bj:home' %}" class="btn btn-outline-primary">ホームへ</a>
+{% endblock content %}
