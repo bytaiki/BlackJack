@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Room
 from .forms import BetForm
-from .logic import Game
+from .logic import Card,Game
 
 
 def home(request):
@@ -43,11 +43,17 @@ def start_game(request, room_id):
 
     game.player_sum = game.hand_sum(game.player_hand)
     game.dealer_sum = game.hand_sum(game.dealer_hand)
+
     request.session['game_data'] = game.to_dict()
+
+    player_hand_img = [Card.card_img(card) for card in game.player_hand]
+    dealer_hand_img = [Card.card_img(card) for card in game.dealer_hand]
 
     context = {
         'player_hand' : game.player_hand,
         'dealer_hand' : game.dealer_hand,
+        'player_hand_img' : player_hand_img,
+        'dealer_hand_img' : dealer_hand_img,
         'cards' : game.cards,
         'bet' : game.bet,
         'player_sum' : game.player_sum,
@@ -87,7 +93,9 @@ def result(request, room_id):
         game.dealer_hand.append(game.draw())
         game.dealer_sum = game.hand_sum(game.dealer_hand)
         
-    print(game.dealer_sum)
+    player_hand_img = [Card.card_img(card) for card in game.player_hand]
+    dealer_hand_img = [Card.card_img(card) for card in game.dealer_hand]
+
     result = game.judge(room)
 
     context = {
@@ -95,10 +103,14 @@ def result(request, room_id):
         'result' : result,
         'player_hand' : game.player_hand,
         'dealer_hand' : game.dealer_hand,
+        'player_hand_img' : player_hand_img,
+        'dealer_hand_img' : dealer_hand_img,
         'dealer_sum' : game.dealer_sum,
         'player_sum' : game.player_sum,
         'bet' : int(game.bet),
-        'isChip' : int(game.isChip)
+        'isChip' : int(game.isChip),
+        'player_sum' : game.player_sum,
+        'dealer_sum' : game.dealer_sum,
             }
     return render(request, 'bj/result.html', context)
 

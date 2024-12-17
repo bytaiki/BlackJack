@@ -1,7 +1,7 @@
 import random
 
 class Card:
-    suits = ['❤︎','♣︎','♦︎','♠︎']
+    suits = ['heart','club','dia','spade']
     def __init__(self):
         self.cards = []
         for suit in self.suits:
@@ -13,6 +13,11 @@ class Card:
         draw_card = self.cards[suit_index][num_index]
         self.cards[suit_index].remove(self.cards[suit_index][num_index])
         return draw_card
+
+    @staticmethod
+    def card_img(card):
+        suit, number = card.split()
+        return f'bj/img/{suit}-{number}.png'
 
 class Game(Card):
     def __init__(self):
