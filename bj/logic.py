@@ -86,23 +86,30 @@ class Game(Card):
         else:
             return 2
 
-        # playerとdealerのそれぞれのHand合計値
+    # playerとdealerのそれぞれのHand合計値
+    #isBet変数は、ベットした結果得たチップ、失ったチップを持つためのもの
     def judge(self, room):
         if self.bust_check(self.player_sum):
+            self.isBet = -self.bet
             result = 'lose'
         elif self.bust_check(self.dealer_sum):
             self.isChip = self.bet * self.return_rate()
+            self.isBet = self.isChip - self.bet
             room.chip += self.isChip
             result = 'win'
         elif self.player_sum < self.dealer_sum:
+            self.isBet = -self.bet
             result = 'lose'
         elif self.player_sum > self.dealer_sum:
             self.isChip = self.bet * self.return_rate()
+            self.isBet = self.isChip - self.bet
             room.chip += self.isChip
             result = 'win'
         else:
+            self.isBet = 0
             room.chip += self.bet
             result = 'draw'
+            
         room.save()
 
         return result

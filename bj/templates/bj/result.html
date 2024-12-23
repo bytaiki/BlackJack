@@ -1,10 +1,10 @@
 {% extends './base.html' %}
 {% load static %}
 {% block content %}
-<!-- <h5> あなたの{{ result }} </h5> -->
+<div class="container">
 {% if result == 'win' %}
 <h5> あなたの勝ちです！ </h5>
-<p> {{ isChip }}チップ獲得！ </p>
+<p> {{ getChip }}チップ獲得！ </p>
 {% elif result == 'lose' %}
 <h5> あなたの負けです。 </h5>
 <p> {{ bet }}チップを失いました... </p>
@@ -12,16 +12,23 @@
 <h5> 引き分けです。 </h5>
 <p> BETした{{ bet }}チップが戻されます。</p>
 {% endif %}
+<div class="row" >
+    <div class="col">
 <h3>あなたのハンド</h3>
     {% for hand_path in player_hand_img %}
     <img src="{% static hand_path %}" alt="画像">
     {% endfor %}
     <p>合計 : {{ player_sum }} </p>
+    </div>
+    <div class="col">
 <h3>ディーラーのハンド</h3>
 {% for hand_path in dealer_hand_img %}
 <img src="{% static hand_path %}" alt="画像">
 {% endfor %}
-<p>{{ dealer_sum }}</p>
+<p>合計 : {{ dealer_sum }}</p>
+</div>
+</div>
 <a href="{% url 'bj:lobby' room.id %}" class="btn btn-primary">もう一度ゲーム</a>
 <a href="{% url 'bj:home'%}" class="btn btn-outline-primary">ホームへ</a>
+</div>
 {% endblock content %}

@@ -1,0 +1,50 @@
+{% load static %}
+<div class="history-area">
+  <h3 class="text-center">直近５ゲーム</h3>
+  {% for game_result in game_results %}
+  <div class="card w-100">
+    <div class="card-header">
+      対戦履歴
+    </div>
+    <div class="card-body">
+      <div class="row align-items-center">
+        <!-- プレイヤーのカード -->
+        <div class="col-md-5 col-12">
+          <h6 class="text-center mb-3">プレイヤーハンド</h6>
+          <div class="row row-cols-2 g-2">
+            {% for i in game_result.p_hand_img %}
+            <div class="col">
+              <img src="{% static i %}" class="img-thumbnail" alt="プレイヤーカード">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- VS セクション -->
+        <div class="col-md-2 col-12 text-center my-2">
+          <p>VS</p>
+        </div>
+        <!-- ディーラーのカード -->
+        <div class="col-md-5 col-12">
+          <h6 class="text-center mb-3">ディーラーハンド</h6>
+          <div class="row row-cols-2 g-2">
+            {% for l in game_result.d_hand_img %}
+            <div class="col">
+              <img src="{% static l %}" class="img-thumbnail" alt="ディーラーカード">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <p>対戦結果 : {{ game_result.result }} </p>
+      {% if game_result.bet_result > 0 %}
+      <p> チップ増減 :  +{{ game_result.bet_result }} </p>
+      {% elif game_result.bet_result == 0 %}
+      <p> チップ増減 :  {{ game_result.bet_result }} </p>
+      {% else %}
+      <p> チップ増減 :  {{ game_result.bet_result }} </p>
+      {% endif %}
+      <p>日時 : {{ game_result.played_date }} </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>

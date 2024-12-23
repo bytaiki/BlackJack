@@ -1,26 +1,38 @@
 {% extends './base.html' %}
 {% load static %}
 {% block content %}
-<h1>ターン開始</h1>
-<p>
-    <span class="material-symbols-outlined align-bottom">
-    poker_chip
-    </span> {{ bet }} チップ をかけて勝負！
-</p>
-<div class="d-flex justify-content-around">
-    <div class="d-inlin">
-        <h6>あなたのハンド</h3>
-        {% for hand_path in player_hand_img %}
-        <img src="{% static hand_path %}" alt="画像">
-        {% endfor %}
-        <p> {{ player_sum }}  </p>
-        <a href="{% url 'bj:hit' %}" class="btn btn-primary">HIT</a>
-        <a href="{% url 'bj:result' room.id %}" class="btn btn-primary">STAND</a>
-    </div>
-    <div class="d-inline">
+<div class="row">
+  <div class="col-9">
+    <div class="container">
+    <h1 class="mt-5">ターン開始</h1>
+    <p>
+      <span class="material-symbols-outlined align-bottom">
+        poker_chip
+      </span> {{ bet }} チップ をかけて勝負！
+    </p>
+    <div class="d-flex justify-content-around">
+      <div class="d-inlin">
+          <h6>あなたのハンド</h3>
+          {% for hand_path in player_hand_img %}
+          <img src="{% static hand_path %}" alt="画像">
+          {% endfor %}
+          <p> 合計 : {{ player_sum }}  </p>
+          <a href="{% url 'bj:hit' %}" class="btn btn-primary">HIT</a>
+          <a href="{% url 'bj:result' room.id %}" class="btn btn-primary">STAND</a>
+      </div>
+      <div class="d-inline">
         <h6>ディーラーのハンド</h6>
-    <img src="{% static dealer_hand_img.0 %}" alt="画像">
-    <p class="p-2"> ? </p>
+        <img src="{% static dealer_hand_img.0 %}" alt="画像">
+        <p class="p-2"> 合計 : {{ dealer_handOne.1 }} + ? </p>
+      </div>
     </div>
+    </div>
+  </div>
+  <div class="col-3">
+    {% include 'bj/components/playHistory.html' %}
+  </div>
 </div>
 {% endblock content %}
+{% block script %}
+<script src="{% static 'bj/js/gameData.js' %}"></script>
+{% endblock script %}
