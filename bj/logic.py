@@ -25,7 +25,7 @@ class Game(Card):
         self.player_hand = []
         self.dealer_hand = []
         self.bet = 0
-        self.room = 1
+        self.user = 1
         self.player_sum = 0
         self.dealer_sum = 0
         self.isChip = 1
@@ -33,7 +33,7 @@ class Game(Card):
     def to_dict(self):
         return {
             'bet' : self.bet,
-            'room' : self.room,
+            'user' : self.user,
             'player_hand' : self.player_hand,
             'dealer_hand' : self.dealer_hand,
             'cards' : self.cards,
@@ -45,7 +45,7 @@ class Game(Card):
             return cls()  # 新しいGameオブジェクトを生成
         game = cls()
         game.bet = data.get('bet', 0)
-        game.room = data.get('room', 1)
+        game.user = data.get('user', 1)
         game.player_hand = data.get('player_hand', [])
         game.dealer_hand = data.get('dealer_hand', [])
         game.cards = data.get('cards', [])
@@ -88,28 +88,32 @@ class Game(Card):
 
     # playerとdealerのそれぞれのHand合計値
     #isBet変数は、ベットした結果得たチップ、失ったチップを持つためのもの
-    def judge(self, room):
+    def judge(self, user):
         if self.bust_check(self.player_sum):
             self.isBet = -self.bet
             result = 'lose'
+            user.lose += 1
         elif self.bust_check(self.dealer_sum):
             self.isChip = self.bet * self.return_rate()
             self.isBet = self.isChip - self.bet
-            room.chip += self.isChip
+            user.chip += self.isChip
             result = 'win'
+            user.win += 1
         elif self.player_sum < self.dealer_sum:
             self.isBet = -self.bet
             result = 'lose'
+            user.lose += 1
         elif self.player_sum > self.dealer_sum:
             self.isChip = self.bet * self.return_rate()
             self.isBet = self.isChip - self.bet
-            room.chip += self.isChip
+            user.chip += self.isChip
             result = 'win'
+            user.win += 1
         else:
             self.isBet = 0
-            room.chip += self.bet
+            user.chip += self.bet
             result = 'draw'
             
-        room.save()
+        user.save()
 
         return result

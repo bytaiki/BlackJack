@@ -1,14 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-
-class Room(models.Model):
-    chip = models.IntegerField(default = 100)
+class CustomUser(AbstractUser):
+    chip = models.IntegerField(default=100)
+    win = models.IntegerField(default=0)
+    lose = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'ROOM {self.id}'
+        return self.username
 
 class GameResult(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     result = models.CharField(max_length=100)
     bet_result = models.IntegerField()
     p_hand_sum = models.PositiveIntegerField()
@@ -18,5 +20,5 @@ class GameResult(models.Model):
     played_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Game{self.id} at Room{self.room.id}'
+        return f'Game{self.id} at {self.user.username}'
 

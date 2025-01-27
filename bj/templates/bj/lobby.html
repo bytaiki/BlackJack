@@ -1,10 +1,10 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 {% block content %}
-<div class="container">
+<div class="container mt-5">
 <div class="row">
     <div class="col-7">
-<h1> Room {{ room.id }} へようこそ！</h1>
-<p>現所持チップ: {{ room.chip }} </p>
+<h1> {{ user.username }} さんのプレイルームです </h1>
+<p>現所持チップ: {{ user.chip }} </p>
 <form method="post" class="form">
     {% csrf_token %}
     <div class="form-group d-inline-flex">

@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 <div class="row">
@@ -18,7 +18,7 @@
           {% endfor %}
           <p> 合計 : {{ player_sum }}  </p>
           <a href="{% url 'bj:hit' %}" class="btn btn-primary">HIT</a>
-          <a href="{% url 'bj:result' room.id %}" class="btn btn-primary">STAND</a>
+          <a href="{% url 'bj:result' user.id %}" class="btn btn-primary">STAND</a>
       </div>
       <div class="d-inline">
         <h6>ディーラーのハンド</h6>
@@ -33,6 +33,3 @@
   </div>
 </div>
 {% endblock content %}
-{% block script %}
-<script src="{% static 'bj/js/gameData.js' %}"></script>
-{% endblock script %}

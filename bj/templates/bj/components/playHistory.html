@@ -37,11 +37,11 @@
       </div>
       <p>対戦結果 : {{ game_result.result }} </p>
       {% if game_result.bet_result > 0 %}
-      <p> チップ増減 :  +{{ game_result.bet_result }} </p>
+      <p> チップ :  +{{ game_result.bet_result }} </p>
       {% elif game_result.bet_result == 0 %}
-      <p> チップ増減 :  {{ game_result.bet_result }} </p>
+      <p> チップ :  {{ game_result.bet_result }} </p>
       {% else %}
-      <p> チップ増減 :  {{ game_result.bet_result }} </p>
+      <p> チップ :  {{ game_result.bet_result }} </p>
       {% endif %}
       <p>日時 : {{ game_result.played_date }} </p>
     </div>

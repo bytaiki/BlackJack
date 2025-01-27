@@ -1,4 +1,4 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 <div class="container">
@@ -28,7 +28,7 @@
 <p>合計 : {{ dealer_sum }}</p>
 </div>
 </div>
-<a href="{% url 'bj:lobby' room.id %}" class="btn btn-primary">もう一度ゲーム</a>
+<a href="{% url 'bj:lobby' user.id %}" class="btn btn-primary">もう一度ゲーム</a>
 <a href="{% url 'bj:home'%}" class="btn btn-outline-primary">ホームへ</a>
 </div>
 {% endblock content %}
